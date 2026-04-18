@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibraTrack — Sign In</title>
+<title>NAJ — Sign In</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -119,12 +119,21 @@
     color: rgba(255,255,255,0.35);
   }
 
-  .hero {
-    position: relative;
+ .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    /* Moving it upward */
+    padding-top: 10vh; 
+    
+    /* Ensuring it takes up space to allow centering */
+    min-height: 80vh; 
+    
     z-index: 1;
     animation: fadeUp 0.7s 0.1s ease both;
   }
-
   .hero-tag {
     display: inline-flex;
     align-items: center;
@@ -173,6 +182,8 @@
     color: rgba(255,255,255,0.45);
     line-height: 1.75;
     max-width: 340px;
+    /* Added this to center the paragraph container itself */
+    margin: 0 auto; 
   }
 
   /* stats row */
@@ -698,7 +709,7 @@
   <div class="brand">
     <div class="brand-icon">📚</div>
     <div class="brand-text">
-      <div class="brand-name">LibraTrack</div>
+      <div class="brand-name">NAJ</div>
       <div class="brand-sub">Library System</div>
     </div>
   </div>
@@ -707,23 +718,6 @@
     <div class="hero-tag">Secure Access Portal</div>
     <h1 class="hero-headline">Manage your<br><em>library</em><br>with ease.</h1>
     <p class="hero-body">Track borrowed books, monitor due dates, manage members, and keep your collection organized — all in one place.</p>
-  </div>
-
-  <div class="stats-row">
-    <div class="stat-item">
-      <div class="stat-num">15</div>
-      <div class="stat-lbl">Books catalogued</div>
-    </div>
-    <div class="stat-div"></div>
-    <div class="stat-item">
-      <div class="stat-num">10</div>
-      <div class="stat-lbl">Active members</div>
-    </div>
-    <div class="stat-div"></div>
-    <div class="stat-item">
-      <div class="stat-num">15</div>
-      <div class="stat-lbl">Loan records</div>
-    </div>
   </div>
 </div>
 
@@ -798,21 +792,6 @@
         <div class="spinner"></div>
       </button>
 
-    </div>
-
-    <div class="card-footer">
-      <div class="credentials-hint">Demo credentials — click to auto-fill:</div>
-      <div class="cred-row">
-        <div class="cred-chip" onclick="fillCreds('admin','admin','admin123')">
-          <span>👑</span><span class="cred-role">Admin</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">admin / admin123</span>
-        </div>
-        <div class="cred-chip" onclick="fillCreds('manager','manager','mgr456')">
-          <span>📋</span><span class="cred-role">Manager</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">manager / mgr456</span>
-        </div>
-        <div class="cred-chip" onclick="fillCreds('staff','staff','stf789')">
-          <span>🔖</span><span class="cred-role">Staff</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">staff / stf789</span>
-        </div>
-      </div>
     </div>
 
   </div>
