@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LibraTrack — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --ink-soft: #4a4540;
+    --ink-muted: #8a837a;
+    --paper: #faf8f5;
+    --paper-warm: #f3efe8;
+    --paper-card: #ffffff;
+    --amber: #c8821a;
+    --amber-light: #f0c97a;
+    --amber-pale: #fdf3dc;
+    --teal: #1a6b5c;
+    --teal-pale: #e0f2ed;
+    --coral: #c84c2a;
+    --coral-pale: #fdeee9;
+    --border: #e4dfd8;
+    --shadow-sm: 0 1px 3px rgba(26,22,18,0.06), 0 1px 2px rgba(26,22,18,0.04);
+    --shadow-md: 0 4px 16px rgba(26,22,18,0.10), 0 2px 6px rgba(26,22,18,0.07);
+    --shadow-lg: 0 16px 48px rgba(26,22,18,0.14), 0 4px 16px rgba(26,22,18,0.08);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    width: 48%;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 52px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* decorative book-shelf lines */
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 58px,
+        rgba(255,255,255,0.025) 58px,
+        rgba(255,255,255,0.025) 59px
+      );
+    pointer-events: none;
+  }
+
+  /* glowing amber orb */
+  .left-panel::after {
+    content: '';
+    position: absolute;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,130,26,0.18) 0%, transparent 70%);
+    top: -80px; right: -100px;
+    pointer-events: none;
+    animation: orb 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes orb {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(-30px, 40px) scale(1.12); }
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .brand-icon {
+    width: 44px; height: 44px;
+    background: var(--amber);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+
+  .brand-text { display: flex; flex-direction: column; gap: 1px; }
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .brand-sub {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .hero {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200,130,26,0.15);
+    border: 1px solid rgba(200,130,26,0.3);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 24px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .hero-body {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.75;
+    max-width: 340px;
+  }
+
+  /* stats row */
+  .stats-row {
+    display: flex;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .stat-item { display: flex; flex-direction: column; gap: 3px; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-div {
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+    align-self: stretch;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    flex: 1;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  /* warm top-right texture */
+  .right-panel::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,130,26,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .login-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    animation: cardIn 0.55s 0.15s cubic-bezier(0.34,1.2,0.64,1) both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .card-top {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 28px 20px;
+  }
+
+  .card-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .card-sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  .card-body { padding: 24px 28px; }
+
+  /* role picker */
+  .role-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .role-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--paper-warm);
+    cursor: pointer;
+    transition: all 0.18s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .role-btn:hover { border-color: var(--amber); background: var(--amber-pale); }
+
+  .role-btn.selected {
+    border-color: var(--amber);
+    background: var(--amber-pale);
+    box-shadow: 0 0 0 3px rgba(200,130,26,0.14);
+  }
+
+  .role-btn.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 5px; right: 7px;
+    font-size: 10px;
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  .role-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .role-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+
+  .role-desc {
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* form fields */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+
+  .form-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .input-wrap { position: relative; }
+
+  .form-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    width: 100%;
+    color: var(--ink);
+    background: var(--paper);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .form-input:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,130,26,0.12);
+  }
+
+  .form-input.error { border-color: var(--coral); }
+  .form-input.error:focus { box-shadow: 0 0 0 3px rgba(200,76,42,0.1); }
+
+  .input-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .input-icon:hover { color: var(--ink); }
+
+  .error-msg {
+    font-size: 11px;
+    color: var(--coral);
+    display: none;
+    margin-top: 2px;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* remember + forgot row */
+  .form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .check-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .check-label input[type=checkbox] {
+    width: 15px; height: 15px;
+    accent-color: var(--amber);
+    cursor: pointer;
+  }
+
+  .forgot-link {
+    font-size: 12px;
+    color: var(--amber);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .forgot-link:hover { color: #b5741a; }
+
+  /* submit */
+  .btn-login {
+    width: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-login::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.15s;
+  }
+
+  .btn-login:hover { background: #2e2922; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn-login:active { transform: translateY(0); }
+
+  .btn-login.loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .btn-login .spinner {
+    display: none;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+
+  .btn-login.loading .btn-text { display: none; }
+  .btn-login.loading .spinner { display: block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* alert banner */
+  .alert {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    animation: alertIn 0.2s ease;
+  }
+
+  .alert.show { display: flex; }
+
+  .alert-error {
+    background: var(--coral-pale);
+    color: var(--coral);
+    border: 1px solid rgba(200,76,42,0.2);
+  }
+
+  @keyframes alertIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+
+  /* card footer */
+  .card-footer {
+    padding: 14px 28px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--paper-warm);
+  }
+
+  .credentials-hint {
+    font-size: 11px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .cred-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .cred-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 9px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink-soft);
+  }
+
+  .cred-chip:hover { border-color: var(--amber); color: var(--ink); background: var(--amber-pale); }
+
+  .cred-role {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--paper);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .success-overlay.show { display: flex; }
+
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .success-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 40px 48px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    animation: successIn 0.5s 0.1s cubic-bezier(0.34,1.4,0.64,1) both;
+  }
+
+  @keyframes successIn {
+    from { opacity:0; transform: scale(0.88) translateY(20px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+
+  .success-badge {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--amber-pale);
+    border: 2px solid rgba(200,130,26,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 20px;
+    animation: badgePop 0.5s 0.3s cubic-bezier(0.34,1.6,0.64,1) both;
+  }
+
+  @keyframes badgePop {
+    from { transform: scale(0); }
+    to   { transform: scale(1); }
+  }
+
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .success-sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+
+  .role-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin: 10px 0 24px;
+  }
+
+  .role-pill.admin   { background: #fff3cd; color: #7a5100; }
+  .role-pill.manager { background: var(--teal-pale); color: var(--teal); }
+  .role-pill.staff   { background: #dff0ff; color: #1060a0; }
+
+  .access-list {
+    text-align: left;
+    background: var(--paper-warm);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+
+  .access-list-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+
+  .access-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 3px 0;
+  }
+
+  .access-item .check { color: var(--teal); font-size: 12px; font-weight: 700; }
+  .access-item .cross { color: var(--ink-muted); font-size: 12px; }
+
+  .btn-proceed {
+    width: 100%;
+    padding: 12px;
+    background: var(--amber);
+    color: var(--ink);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .btn-proceed:hover { background: #b5741a; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .left-panel { display: none; }
+    .right-panel { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LEFT PANEL ═══════════ -->
+<div class="left-panel">
+  <div class="brand">
+    <div class="brand-icon">📚</div>
+    <div class="brand-text">
+      <div class="brand-name">LibraTrack</div>
+      <div class="brand-sub">Library System</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Secure Access Portal</div>
+    <h1 class="hero-headline">Manage your<br><em>library</em><br>with ease.</h1>
+    <p class="hero-body">Track borrowed books, monitor due dates, manage members, and keep your collection organized — all in one place.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">15</div>
+      <div class="stat-lbl">Books catalogued</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">10</div>
+      <div class="stat-lbl">Active members</div>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <div class="stat-num">15</div>
+      <div class="stat-lbl">Loan records</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ RIGHT PANEL ═══════════ -->
+<div class="right-panel">
+  <div class="login-card">
+
+    <div class="card-top">
+      <div class="card-eyebrow">Staff Portal</div>
+      <div class="card-title">Welcome back</div>
+      <div class="card-sub">Sign in to access your dashboard.</div>
+    </div>
+
+    <div class="card-body">
+
+      <!-- Alert -->
+      <div class="alert alert-error" id="alertBox">
+        <span>⚠</span>
+        <span id="alertMsg">Invalid credentials. Please try again.</span>
+      </div>
+
+      <!-- Role selector -->
+      <label class="role-label">Select your role</label>
+      <div class="role-grid">
+        <div class="role-btn" id="role-admin" onclick="selectRole('admin')">
+          <div class="role-icon">👑</div>
+          <div class="role-name">Admin</div>
+          <div class="role-desc">Full access</div>
+        </div>
+        <div class="role-btn" id="role-manager" onclick="selectRole('manager')">
+          <div class="role-icon">📋</div>
+          <div class="role-name">Manager</div>
+          <div class="role-desc">Manage loans</div>
+        </div>
+        <div class="role-btn" id="role-staff" onclick="selectRole('staff')">
+          <div class="role-icon">🔖</div>
+          <div class="role-name">Staff</div>
+          <div class="role-desc">View only</div>
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <div class="input-wrap">
+          <input class="form-input" type="text" id="username" placeholder="Enter your username" autocomplete="username" oninput="clearError()">
+        </div>
+        <span class="error-msg" id="userErr">Username is required.</span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <input class="form-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" oninput="clearError()" onkeydown="if(event.key==='Enter')doLogin()">
+          <span class="input-icon" onclick="togglePw()" id="pwEye">👁</span>
+        </div>
+        <span class="error-msg" id="pwErr">Password is required.</span>
+      </div>
+
+      <!-- Remember / Forgot -->
+      <div class="form-row">
+        <label class="check-label">
+          <input type="checkbox" id="remember"> Remember me
+        </label>
+        <a class="forgot-link" onclick="showForgot()">Forgot password?</a>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-login" id="loginBtn" onclick="doLogin()">
+        <span class="btn-text">Sign In</span>
+        <div class="spinner"></div>
+      </button>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="credentials-hint">Demo credentials — click to auto-fill:</div>
+      <div class="cred-row">
+        <div class="cred-chip" onclick="fillCreds('admin','admin','admin123')">
+          <span>👑</span><span class="cred-role">Admin</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">admin / admin123</span>
+        </div>
+        <div class="cred-chip" onclick="fillCreds('manager','manager','mgr456')">
+          <span>📋</span><span class="cred-role">Manager</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">manager / mgr456</span>
+        </div>
+        <div class="cred-chip" onclick="fillCreds('staff','staff','stf789')">
+          <span>🔖</span><span class="cred-role">Staff</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-muted)">staff / stf789</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ SUCCESS OVERLAY ═══════════ -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-badge" id="successBadge">👑</div>
+    <div class="success-title" id="successTitle">Welcome, Admin!</div>
+    <div class="success-sub" id="successSub">You are signed in as</div>
+    <div class="role-pill" id="rolePill">Admin</div>
+    <div class="access-list">
+      <div class="access-list-title">Access permissions</div>
+      <div id="accessItems"></div>
+    </div>
+    <button class="btn-proceed" onclick="goToDashboard()">Enter Dashboard →</button>
+  </div>
+</div>
+
+<script>
+  // ── CREDENTIALS ──
+  const USERS = {
+    admin:   { password: 'admin123',  role: 'admin',   name: 'Administrator', icon: '👑' },
+    manager: { password: 'mgr456',    role: 'manager', name: 'Library Manager', icon: '📋' },
+    staff:   { password: 'stf789',    role: 'staff',   name: 'Staff Member',  icon: '🔖' },
+  };
+
+  const PERMISSIONS = {
+    admin: [
+      { label: 'View all loan records',       granted: true  },
+      { label: 'Add & edit loan records',     granted: true  },
+      { label: 'Delete records',              granted: true  },
+      { label: 'Manage books & members',      granted: true  },
+      { label: 'Access system settings',      granted: true  },
+    ],
+    manager: [
+      { label: 'View all loan records',       granted: true  },
+      { label: 'Add & edit loan records',     granted: true  },
+      { label: 'Delete records',              granted: false },
+      { label: 'Manage books & members',      granted: true  },
+      { label: 'Access system settings',      granted: false },
+    ],
+    staff: [
+      { label: 'View all loan records',       granted: true  },
+      { label: 'Add & edit loan records',     granted: false },
+      { label: 'Delete records',              granted: false },
+      { label: 'Manage books & members',      granted: false },
+      { label: 'Access system settings',      granted: false },
+    ],
+  };
+
+  let selectedRole = '';
+
+  function selectRole(r) {
+    selectedRole = r;
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('role-' + r).classList.add('selected');
+    clearError();
+  }
+
+  function clearError() {
+    document.getElementById('alertBox').classList.remove('show');
+    document.getElementById('userErr').classList.remove('show');
+    document.getElementById('pwErr').classList.remove('show');
+    document.getElementById('username').classList.remove('error');
+    document.getElementById('password').classList.remove('error');
+  }
+
+  function showAlert(msg) {
+    document.getElementById('alertMsg').textContent = msg;
+    document.getElementById('alertBox').classList.add('show');
+  }
+
+  function togglePw() {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+    document.getElementById('pwEye').textContent = pw.type === 'password' ? '👁' : '🙈';
+  }
+
+  function fillCreds(role, user, pass) {
+    selectRole(role);
+    document.getElementById('username').value = user;
+    document.getElementById('password').value = pass;
+    clearError();
+  }
+
+  function showForgot() {
+    showAlert('Password reset is not available in demo mode. Use the quick-fill chips below.');
+  }
+
+  function doLogin() {
+    clearError();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    let valid = true;
+
+    if (!selectedRole) { showAlert('Please select a role before signing in.'); return; }
+
+    if (!username) {
+      document.getElementById('userErr').classList.add('show');
+      document.getElementById('username').classList.add('error');
+      valid = false;
+    }
+    if (!password) {
+      document.getElementById('pwErr').classList.add('show');
+      document.getElementById('password').classList.add('error');
+      valid = false;
+    }
+    if (!valid) return;
+
+    const btn = document.getElementById('loginBtn');
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+
+      const user = USERS[username.toLowerCase()];
+      if (!user) { showAlert('Username not found.'); return; }
+      if (user.password !== password) { showAlert('Incorrect password. Please try again.'); return; }
+      if (user.role !== selectedRole) {
+        showAlert(`This account does not have the "${capitalize(selectedRole)}" role.`);
+        return;
+      }
+
+      showSuccess(user);
+    }, 900);
+  }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function showSuccess(user) {
+    document.getElementById('successBadge').textContent = user.icon;
+    document.getElementById('successTitle').textContent = `Welcome, ${user.name}!`;
+    document.getElementById('successSub').textContent = 'Signed in as';
+
+    const pill = document.getElementById('rolePill');
+    pill.textContent = capitalize(user.role);
+    pill.className = 'role-pill ' + user.role;
+
+    const perms = PERMISSIONS[user.role];
+    document.getElementById('accessItems').innerHTML = perms.map(p =>
+      `<div class="access-item">
+        <span class="${p.granted ? 'check' : 'cross'}">${p.granted ? '✓' : '✕'}</span>
+        <span style="${!p.granted ? 'opacity:0.4' : ''}">${p.label}</span>
+      </div>`
+    ).join('');
+
+    document.getElementById('successOverlay').classList.add('show');
+
+    // Store session
+    sessionStorage.setItem('libratrack_user', JSON.stringify({ username: user.name, role: user.role, icon: user.icon }));
+  }
+
+  function goToDashboard() {
+    // In production, redirect to library-system.html
+    window.location.href = 'library-system.html';
+  }
+
+  // Auto-select role if returning session exists
+  const stored = sessionStorage.getItem('libratrack_user');
+  if (stored) {
+    try {
+      const u = JSON.parse(stored);
+      // Already logged in — could auto-redirect, but show login for demo purposes
+    } catch(e) {}
+  }
+</script>
+</body>
+</html>
