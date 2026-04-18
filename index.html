@@ -763,22 +763,21 @@
       <div class="form-group">
         <label class="form-label">Username</label>
         <div class="input-wrap">
-          <input class="form-input" type="text" id="username" placeholder="Enter your username" autocomplete="username" oninput="clearError()">
+          <input class="form-input" type="text" id="username" placeholder="Enter your username" autocomplete="off" oninput="clearError()">
         </div>
         <span class="error-msg" id="userErr">Username is required.</span>
       </div>
 
       <!-- Password -->
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <div class="input-wrap">
-          <input class="form-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" oninput="clearError()" onkeydown="if(event.key==='Enter')doLogin()">
-          <span class="input-icon" onclick="togglePw()" id="pwEye">👁</span>
-        </div>
-        <span class="error-msg" id="pwErr">Password is required.</span>
+          <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="input-wrap">
+        <input class="form-input" type="password" id="password" placeholder="Enter your password" autocomplete="off" oninput="clearError()" onkeydown="if(event.key==='Enter')doLogin()">
+        <span class="input-icon" onclick="togglePw()" id="pwEye">👁</span>
       </div>
-
-      <!-- Remember / Forgot -->
+      <span class="error-msg" id="pwErr">Password is required.</span>
+    </div>
+          <!-- Remember / Forgot -->
       <div class="form-row">
         <label class="check-label">
           <input type="checkbox" id="remember"> Remember me
@@ -947,7 +946,7 @@
   }
 
   function goToDashboard() {
-    // In production, redirect to library-system.html
+    // In production, redirect to index.html
     window.location.href = 'library-system.html';
   }
 
